@@ -1,53 +1,22 @@
-import Button from "./components/button";
-import ButtonIcon from "./components/button-icon";
-import ChevronLeftIcon from "./assets/icons/chevron-left.svg?react";
-import ChevronRightIcon from "./assets/icons/chevron-right.svg?react";
-import Badge from "./components/badge";
-import Alert from "./components/alert";
-import Divider from "./components/divider";
+import { BrowserRouter, Routes, Route } from "react-router";
+import PageComponents from "./pages/page-components";
+import Layout from "./pages/layout";
+import HomePage from "./pages/HomePage";
+import PhotoDetails from "./pages/photoDetais";
 
 export default function App() {
-	return (
-		<div className="grid gap-7 p-6">
-			<div className="flex gap-3">
-				<Button>Button</Button>
-				<Button variant="secondary">Button</Button>
-				<Button disabled>Button</Button>
-				<Button handling>Loading</Button>
-				<Button icon={ChevronRightIcon}>Próxima Imagem</Button>
-				<Button variant="ghost" size="sm">
-					Button
-				</Button>
-				<Button variant="primary" size="sm">
-					Button
-				</Button>
-			</div>
-
-			<div className="flex gap-3">
-				<ButtonIcon icon={ChevronLeftIcon} />
-				<ButtonIcon icon={ChevronRightIcon} variant="secondary" />
-			</div>
-
-			<div className="flex gap-3">
-				<Badge>Todos</Badge>
-				<Badge>Natureza</Badge>
-				<Badge>Viagem</Badge>
-				<Badge loading>Viagem</Badge>
-				<Badge loading>Viagem</Badge>
-				<Badge loading>Viagem</Badge>
-			</div>
-
-			<div>
-				<Alert>
-					Tamanho máximo: 50MB
-					<br />
-					Você pode selecionar arquivos em PNG, JPG, JPEG ou WEBP
-				</Alert>
-			</div>
-
-			<div>
-				<Divider />
-			</div>
-		</div>
-	);
+  return (
+    <BrowserRouter>
+      <Routes>
+        //layout define o layout base da aplicação, onde os componentes comuns
+        como header, footer, sidebar podem ser definidos. O Outlet é usado para
+        renderizar os componentes filhos dentro do layout.
+        <Route element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/photo/:id" element={<PhotoDetails />} />
+          <Route path="/components" element={<PageComponents />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
