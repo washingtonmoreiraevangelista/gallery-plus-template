@@ -1,9 +1,14 @@
 import { Outlet } from "react-router";
+import Header from "../components/header";
+import Content from "../components/content";
 
 export default function Layout() {
   return (
     <>
-      <Outlet />
+      <Header className="mt-9" />
+      <Content>
+        <Outlet />
+      </Content>
     </>
   );
 }

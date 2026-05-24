@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router";
 import PageComponents from "./pages/page-components";
 import Layout from "./pages/layout";
-import HomePage from "./pages/HomePage";
 import PhotoDetails from "./pages/photoDetais";
+import HomePage from "./pages/homePage";
 
 export default function App() {
   return (
