@@ -10,17 +10,17 @@ import SeachIcon from "../assets/icons/search.svg?react";
 import InputCheckBox from "../components/input-checkbox";
 import InputSingleFile from "../components/input-single-file";
 import { useForm } from "react-hook-form";
-import ImageFilePreview from "../components/image-file-preview";
 import {
   Dialog,
   DialogBody,
   DialogClose,
+  DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTrigger,
-  DialongContent,
 } from "../components/dialog";
 import Text from "../components/text";
+import ImagePreview from "../components/image-preview";
 
 export default function PageComponents() {
   const form = useForm();
@@ -82,7 +82,7 @@ export default function PageComponents() {
           form={form}
           allowedExtensions={["png", "jpg", "jpeg", "webp"]}
           maxFileSizeInMB={50}
-          replaceBy={<ImageFilePreview src={fileSource} alt="imagem" />}
+          replaceBy={<ImagePreview src={fileSource} alt="imagem" />}
           {...form.register("file")}
         />
       </div>
@@ -93,7 +93,7 @@ export default function PageComponents() {
             <Button>Abrir Modal</Button>
           </DialogTrigger>
 
-          <DialongContent>
+          <DialogContent>
             <DialogHeader>Teste modal</DialogHeader>{" "}
             <DialogBody>
               Teste conteudo
@@ -105,7 +105,7 @@ export default function PageComponents() {
                 form={form}
                 allowedExtensions={["png", "jpg", "jpeg", "webp"]}
                 maxFileSizeInMB={50}
-                replaceBy={<ImageFilePreview src={fileSource} alt="imagem" />}
+                replaceBy={<ImagePreview src={fileSource} alt="imagem" />}
                 {...form.register("file")}
               />
             </DialogBody>
@@ -116,7 +116,7 @@ export default function PageComponents() {
               
               <Button>Adicionar</Button>
             </DialogFooter>
-          </DialongContent>
+          </DialogContent>
         </Dialog>
       </div>
     </div>

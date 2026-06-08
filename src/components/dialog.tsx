@@ -35,7 +35,7 @@ export function DialogOverlay({
   );
 }
 
-export function DialongContent({
+export function DialogContent({
   className,
   ref,
   children,

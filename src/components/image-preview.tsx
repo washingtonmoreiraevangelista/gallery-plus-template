@@ -18,7 +18,7 @@ interface ImageFilePreviewProps extends React.ComponentProps<"img"> {
 }
 
 
-export default function ImageFilePreview({
+export default function ImagePreview({
     className,
     imageClassName,
     ...props
