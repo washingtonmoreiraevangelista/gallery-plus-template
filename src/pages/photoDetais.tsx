@@ -1,27 +1,31 @@
-import { useParams } from "react-router";
-import Container from "../components/container";
-import Text from "../components/text";
-import type { Photo } from "../contexts/photos/models/photos";
-import Skeleton from "../components/skeleton";
-import PhotoNavigator from "../contexts/photos/components/photo-navigator";
-import ImagePreview from "../components/image-preview";
-import Button from "../components/button";
-import AlbunsListSelect from "../contexts/albums/components/albuns-list-select";
+import { useParams } from "react-router-dom"
+import Container from "../components/container"
+import Text from "../components/text"
+import Skeleton from "../components/skeleton"
+import PhotoNavigator from "../contexts/photos/components/photo-navigator"
+import ImagePreview from "../components/image-preview"
+import Button from "../components/button"
+import AlbunsListSelect from "../contexts/albums/components/albuns-list-select"
+import useAlbums from '../contexts/albums/hooks/use-albuns'
+import usePhoto from '../contexts/photos/hooks/use-photo'
+import type { Photo } from '../contexts/photos/models/photos'
+import React from 'react'
 
 export default function PhotoDetails() {
-  const { id } = useParams();
+  const { id } = useParams()
+  const { photo, previousPhotoId, nextPhotoId, isLoadingPhoto, deletePhoto } = usePhoto(id)
+  const { albums, isLoadingAlbums } = useAlbums()
+  const [isDeletePhoto, setIsDeletePhoto] = React.useTransition()
 
-  const isLoadingPhoto = false;
-  const photo = {
-    id: "1",
-    title: "Sample Photo",
-    imageId: "sample-photo.jpg",
-    albums: [
-      { id: "1", title: "Sample Album" },
-      { id: "2", title: "Another Album" },
-      { id: "3", title: "Third Album" },
-    ],
-  } as Photo;
+  function handledeletePhoto() {
+    setIsDeletePhoto(async () => {
+      await deletePhoto(photo!.id)
+    })
+  }
+
+  if (!isLoadingPhoto && !photo) {
+    return <div>Foto não encontrada</div>
+  }
 
   return (
     <Container>
@@ -31,14 +35,18 @@ export default function PhotoDetails() {
         ) : (
           <Skeleton className="w-48 h-8" />
         )}
-        <PhotoNavigator />
+        <PhotoNavigator
+          previousPhotoId={previousPhotoId}
+          nextPhotoId={nextPhotoId}
+          loading={isLoadingPhoto}
+        />
       </header>
 
       <div className="grid grid-cols-[21rem_1fr] gap-24">
         <div className="space-y-3">
           {!isLoadingPhoto ? (
             <ImagePreview
-              src={`/images/${photo?.imageId}`}
+              src={`${import.meta.env.VITE_IMAGES_URL}/${photo?.imageId}`}
               title={photo?.title}
               imageClassName="h-[21rem]"
             />
@@ -46,7 +54,13 @@ export default function PhotoDetails() {
             <Skeleton className="h-[21rem]" />
           )}
           {!isLoadingPhoto ? (
-            <Button variant="destructive">Excluir</Button>
+            <Button
+              variant="destructive"
+              onClick={handledeletePhoto}
+              disabled={isDeletePhoto}
+            >
+              {isDeletePhoto ? "Excluindo..." : "Excluir"}
+            </Button>
           ) : (
             <Skeleton className="w-24 h-8" />
           )}
@@ -56,15 +70,13 @@ export default function PhotoDetails() {
           <Text as="h3" variant="heading-medium" className="mb-6">
             Àlbuns
           </Text>
-          <AlbunsListSelect photo={photo} albums={[
-              { id: "1", title: "Sample Album" },
-              { id: "2", title: "Another Album" },
-              { id: "3", title: "Third Album" },
-          ]}
-          loading={isLoadingPhoto}
-           />
+          <AlbunsListSelect
+            photo={photo as Photo}
+            albums={albums}
+            loading={isLoadingAlbums}
+          />
         </div>
       </div>
     </Container>
-  );
+  )
 }

@@ -1,56 +1,56 @@
-import React from "react";
-import ImagePreview from "../../../components/image-preview";
-import InputCheckBox from "../../../components/input-checkbox";
-import { tv } from "tailwind-variants";
+import React from "react"
+import ImagePreview from "../../../components/image-preview"
+import InputCheckBox from "../../../components/input-checkbox"
+import { tv } from "tailwind-variants"
 
-export const photoImageSelectTableVariants = tv ({
-    base: "curso-pointer relative rounded-lg",
-    variants:{
-        select:{
-            true: "outline-2  outline-brand"
-        }
+export const photoImageSelectTableVariants = tv({
+  base: "curso-pointer relative rounded-lg",
+  variants: {
+    select: {
+      true: "outline-2  outline-brand"
     }
+  }
 })
 
 
 interface PhotoImageSelectableProps extends React.ComponentProps<typeof ImagePreview> {
-selected?: boolean
-onSelectImage?: (selected: boolean) => void
+  selected?: boolean
+  onSelectImage?: (selected: boolean) => void
 }
 
 
 export default function PhotoImageSelecTable({
-    selected,
-className,
-onSelectImage,
-...props
+  selected,
+  className,
+  onSelectImage,
+  ...props
 }: PhotoImageSelectableProps) {
-const [isSelected,setIsSelected] = React.useState(selected)
+  const [isSelected, setIsSelected] = React.useState(selected)
 
 
-function handleSelect() {
+  function handleSelect() {
     const newValue = !isSelected
 
     setIsSelected(newValue)
     onSelectImage?.(newValue)
-}
+  }
 
 
-return (
+  return (
     <label
-    className={photoImageSelectTableVariants({
+      className={photoImageSelectTableVariants({
         className,
         select: isSelected
-    })}
+      })}
     >
-        <InputCheckBox
+      <InputCheckBox
         size="sm"
-        checked={isSelected}
+        defaultChecked={isSelected}
         onChange={handleSelect}
         className="absolute top-1 left-1"
-        />
+      />
 
-        <ImagePreview {...props}/>
+      <ImagePreview {...props} />
     </label>
-)
+  )
 }

@@ -1,14 +1,14 @@
-import ImagePreview from "../../../components/image-preview";
-import Skeleton from "../../../components/skeleton";
-import type { Photo } from "../models/photos";
-import Text from "../../../components/text";
-import Badge from "../../../components/badge";
-import { buttonTextVariants, buttonVariants } from "../../../components/button";
-import { Link } from "react-router";
+import ImagePreview from "../../../components/image-preview"
+import Skeleton from "../../../components/skeleton"
+import type { Photo } from "../models/photos"
+import Text from "../../../components/text"
+import Badge from "../../../components/badge"
+import { buttonTextVariants, buttonVariants } from "../../../components/button"
+import { Link } from "react-router-dom"
 
 interface PhotoWidgetProps {
-  photo: Photo;
-  loading?: boolean;
+  photo: Photo
+  loading?: boolean
 }
 
 export default function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
@@ -16,7 +16,7 @@ export default function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
     <div className="flex flex-col gap-4">
       {!loading ? (
         <ImagePreview
-          src={`/images/${photo.imageId}`}
+          src={`${import.meta.env.VITE_IMAGES_URL}/${photo.imageId}`}
           title={photo.title}
           imageClassName="w-[10.875rem] h-[10.875rem] rounded-lg "
         />
@@ -74,5 +74,5 @@ export default function PhotoWidget({ photo, loading }: PhotoWidgetProps) {
         <Skeleton className="w-full h-10" />
       )}
     </div>
-  );
+  )
 }

@@ -1,12 +1,17 @@
-import Icon from "./icon";
-import CheckIcon from "../assets/icons/check.svg?react";
-import { type VariantProps, tv } from "tailwind-variants";
+import Icon from "./icon"
+import CheckIcon from "../assets/icons/check.svg?react"
+import { type VariantProps, tv } from "tailwind-variants"
 
 export const inputCheckWrapperVariants = tv({
   base: `
     inline-flex items-center justify-center relative group cursor-pointer
-  `
-});
+  `,
+  variants: {
+    disabled: {
+      true: 'pointer-events-none opacity-80'
+    }
+  }
+})
 
 export const inputCheckBoxVariants = tv({
   base: `
@@ -26,17 +31,15 @@ export const inputCheckBoxVariants = tv({
     size: {
       sm: "w-3 h-3 rounded-sm",
       md: "w-5 h-5 rounded-sm"
-    },
-    disabled: {
-      true: "pointer-events-none"
     }
+
   },
   defaultVariants: {
     variant: "default",
     size: "md",
     disabled: false
   }
-});
+})
 
 export const inputCheckBoxIconVariants = tv({
   base: `
@@ -52,11 +55,11 @@ export const inputCheckBoxIconVariants = tv({
   defaultVariants: {
     size: "md"
   }
-});
+})
 
 interface inputCheckBoxProps
   extends VariantProps<typeof inputCheckBoxVariants>,
-    Omit<React.ComponentProps<"input">, "size" | "disabled"> {}
+  Omit<React.ComponentProps<"input">, "size"> { }
 
 export default function InputCheckBox({
   variant,
@@ -66,11 +69,11 @@ export default function InputCheckBox({
   ...props
 }: inputCheckBoxProps) {
   return (
-    <label className={inputCheckWrapperVariants({ className })}>
+    <label className={inputCheckWrapperVariants({ className, disabled })}>
       <input
         type="checkbox"
         disabled={disabled}
-        className={inputCheckBoxVariants({ variant, size, disabled })}
+        className={inputCheckBoxVariants({ variant, size })}
         {...props}
       />
       <Icon
@@ -78,5 +81,5 @@ export default function InputCheckBox({
         className={inputCheckBoxIconVariants({ size })}
       />
     </label>
-  );
+  )
 }
